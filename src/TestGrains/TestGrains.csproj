@@ -50,6 +50,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventSourcing\IPersonState.cs" />
+    <Compile Include="EventSourcing\JournaledPersonGrain.cs" />
+    <Compile Include="EventSourcing\JournaledPerson_Events.cs" />
+    <Compile Include="EventSourcing\LambdaJournaledPersonGrain.cs" />
     <Compile Include="SimpleGenericGrain.cs" />
     <Compile Include="MultipleSubscriptionConsumerGrain.cs" />
     <Compile Include="ConcreteGrainsWithGenericInterfaces.cs" />

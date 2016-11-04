@@ -3,6 +3,15 @@ using Orleans.Serialization;
 namespace Orleans.Concurrency
 {
     /// <summary>
+    /// Interface for wrapper class for carrying immutable data.
+    /// </summary>
+    public interface IImmutable
+    {
+        /// <summary> Return object reference to the original value stored in this Immutable wrapper. </summary>
+        object Value { get; }
+    }
+
+    /// <summary>
     /// Wrapper class for carrying immutable data.
     /// </summary>
     /// <remarks>
@@ -14,12 +23,15 @@ namespace Orleans.Concurrency
     /// then considerable savings in memory usage and message throughput can be obtained by marking that byte[] argument as <c>Immutable</c>.
     /// </remarks>
     /// <typeparam name="T">Type of data to be wrapped by this Immutable</typeparam>
-    public struct Immutable<T>
+    public struct Immutable<T> : IImmutable
     {
         private readonly T value;
 
         /// <summary> Return reference to the original value stored in this Immutable wrapper. </summary>
         public T Value { get { return value; } }
+
+        /// <summary> Return object reference to the original value stored in this Immutable wrapper. </summary>
+        object IImmutable.Value => Value;
 
         /// <summary>
         /// Constructor to wrap the specified data object in new Immutable wrapper.

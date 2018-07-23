@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Tester.AdoNet")]
 [assembly: InternalsVisibleTo("TesterInternal")]
 [assembly: InternalsVisibleTo("TestInternalGrains")]
+[assembly: InternalsVisibleTo("Youscan.MentionStream.Cluster")]
 
 // Legacy provider support
 [assembly: InternalsVisibleTo("Orleans.Runtime.Legacy")]

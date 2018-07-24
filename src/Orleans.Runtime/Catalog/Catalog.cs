@@ -972,6 +972,8 @@ namespace Orleans.Runtime
                     logger.Warn(ErrorCode.Catalog_WaitForAllTimersToFinish_Exception, String.Format("WaitForAllTimersToFinish {0} failed.", list.Count), exc);
                 }
 
+                logger.Info(ErrorCode.Catalog_DestroyActivations, "Successfully awaited timers in DestroyActivations #{0} of {1} activations", number, list.Count);
+
                 // step 2 - CallGrainDeactivate
                 var tasks2 = new List<Tuple<Task, ActivationData>>();
                 foreach (var activation in list)

@@ -803,7 +803,17 @@ namespace Orleans.Runtime
                     Utils.SafeExecute(timer.Dispose, logger, "timer.Dispose has thrown");
                     tasks.Add(timer.GetCurrentlyExecutingTickTask());
                 }
-                return Task.WhenAll(tasks);
+                var withTimeout = Task.WhenAll(tasks).WithTimeout(TimeSpan.FromSeconds(10));
+                withTimeout.ContinueWith((t, s) =>
+                {
+                    (ILogger log, Grain grain) d = ((ILogger, Grain)) s;
+                    // ReSharper disable once PossibleNullReferenceException
+                    if (t.Exception.GetBaseException() is TimeoutException)
+                        d.log.Error(0, $"{d.grain.GetType()}:{d.grain.IdentityString} timed out while waiting for timers to finish");
+                }, 
+                (logger, GrainInstance), TaskContinuationOptions.OnlyOnFaulted);
+
+                return withTimeout;
             }
         }
 
